@@ -5,13 +5,17 @@ require 'sinatra/reloader'
 require 'localbitcoins'
 require 'time'
 
+def get_offers currency
+	@client.online_buy_ads_lookup(currency: currency, countrycode: '', country_name: '', payment_method: '').to_hash["data"]["ad_list"]
+end
+
 before do
 	@client = LocalBitcoins.new
 end
 
 get '/' do
-	ticker = @client.online_buy_ads_lookup(countrycode: 'RU', currency: 'RUB', country_name: '', payment_method: 'transfers-with-specific-bank')
-	@ticker = ticker.to_hash["data"]["ad_list"]
+	@ticker1 = get_offers ('RUB')
+	@ticker2 = get_offers ('CNY')
 
 	erb :index
 end
