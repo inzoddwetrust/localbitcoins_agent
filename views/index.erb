@@ -1,0 +1,25 @@
+<table class="table table-striped"> <caption><h2>All BUY offers in RUB</h2></caption>
+  <thead>
+    <tr>
+      <th>Profile</th>
+      <th>Trade Type</th>
+      <th>Price per BTC</th>
+      <th>Min-Max amount</th>
+      <th>Link</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%@ticker.first(10).each do |offer|%>
+        <td><a href="https://localbitcoins.net/accounts/profile/<%=offer["data"]["profile"]["username"]%>/"><%=offer["data"]["profile"]["username"]%>
+              (<%=offer["data"]["profile"]["trade_count"]%>, <%=offer["data"]["profile"]["feedback_score"]%>%)</a>
+            <br>Last online
+              <%=a = Time.at(Time.now.utc - Time.parse(offer["data"]["profile"]["last_online"])).utc.strftime("%H:%M:%S")%> ago.
+        </td>
+        <td><%=offer["data"]["bank_name"]%></td>
+        <td><%=offer["data"]["temp_price"]%></td>
+        <td><%=offer["data"]["min_amount"]%> - <%=offer["data"]["max_amount_available"]%></td>
+        <td><a href="<%=offer["actions"]["public_view"]%>">Go to offer</a></td>
+      </tr>
+    <%end%>
+  </tbody>
+</table>
