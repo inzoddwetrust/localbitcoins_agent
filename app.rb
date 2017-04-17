@@ -22,6 +22,10 @@ before do
 end
 
 get '/' do
+	erb :index
+end
+
+get '/result' do
 	@ticker1 = get_offers_buy ('RUB')
 	@ticker2 = get_offers_sell ('CNY')
 	@google_rate = Money.new(1_00, "CNY").exchange_to(:RUB)
