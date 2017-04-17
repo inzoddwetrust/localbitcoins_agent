@@ -1,6 +1,28 @@
-<%=@payment_methods%>
+<h2>Best payment offers</h2>
 
-<table class="table table-striped"> <caption><h2>All BUY offers in RUB</h2></caption>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Best offer to SELL in RUB</th>
+      <th>Best offer to SELL in CNY</th>
+      <th>Exchange rate</th>
+      <th>Current Google rate</th>
+      <th>Losses</th>
+    </tr>
+  </thead>
+  <tbody style="font-size: 150%; color: #AA0000">
+        <td><%=@ticker1.first["data"]["temp_price"]%></td>
+        <td><%=@ticker2.first["data"]["temp_price"]%></td>
+        <td ><%=(@ticker1.first["data"]["temp_price"].to_f/@ticker2.first["data"]["temp_price"].to_f).round(4)%> per CNY</td>
+        <td>NOPE</td>
+        <td>NOPE</td>
+      </tr>
+  </tbody>
+</table>
+
+
+
+<table class="table table-striped"> <caption><h3>All <u>BUY</u> offers in RUB</h3></caption>
   <thead>
     <tr>
       <th>Profile</th>
@@ -18,15 +40,15 @@
               <%=a = Time.at(Time.now.utc - Time.parse(offer["data"]["profile"]["last_online"])).utc.strftime("%H:%M:%S")%> ago.
         </td>
         <td><%=offer["data"]["online_provider"]%>, <%=offer["data"]["bank_name"]%></td>
-        <td><%=offer["data"]["temp_price"]%></td>
+        <td style="font-size: 120%; color: #AA0000"><%=offer["data"]["temp_price"]%></td>
         <td><%=offer["data"]["min_amount"]%> - <%=offer["data"]["max_amount_available"]%></td>
-        <td><a href="<%=offer["actions"]["public_view"]%>">Go to offer</a></td>
+        <td><a href="<%=offer["actions"]["public_view"]%>" class="btn btn-primary" role="button" target="_blank">Go to offer</a></td>
       </tr>
     <%end%>
   </tbody>
 </table>
 
-<table class="table table-striped"> <caption><h2>All BUY offers in CNY</h2></caption>
+<table class="table table-striped"> <caption><h3>All <u>SELL</u> offers in CNY</h3></caption>
   <thead>
     <tr>
       <th>Profile</th>
@@ -44,12 +66,10 @@
               <%=a = Time.at(Time.now.utc - Time.parse(offer["data"]["profile"]["last_online"])).utc.strftime("%H:%M:%S")%> ago.
         </td>
         <td><%=offer["data"]["online_provider"]%>, <%=offer["data"]["bank_name"]%></td>
-        <td><%=offer["data"]["temp_price"]%></td>
+        <td style="font-size: 120%; color: #AA0000"><%=offer["data"]["temp_price"]%></td>
         <td><%=offer["data"]["min_amount"]%> - <%=offer["data"]["max_amount_available"]%></td>
-        <td><a href="<%=offer["actions"]["public_view"]%>">Go to offer</a></td>
+        <td><a href="<%=offer["actions"]["public_view"]%>" class="btn btn-primary" role="button" target="_blank">Go to offer</a></td>
       </tr>
     <%end%>
   </tbody>
 </table>
-
-<%=@ticker2%>
