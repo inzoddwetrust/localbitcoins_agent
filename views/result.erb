@@ -1,6 +1,9 @@
 <h2>Best payment offers</h2>
 
-<h4>You are transferring:</h4> <pre><%=@currency_1%> to <%=@currency_2%></pre>
+<%=@currency_1_bank%>
+<%=@currency_2_bank%>
+
+<h4>You are transferring:</h4> <pre><%=@amount%> <%=@currency_1%> to <%=@currency_2%></pre>
 
 <table class="table table-striped">
   <thead>
@@ -19,7 +22,7 @@
         <td ><%=(@ticker1.first["data"]["temp_price"].to_f/@ticker2.first["data"]["temp_price"].to_f).round(5)%></td>
         <td><%=@google_rate.round(5)%></td>
         <td><%=(((@ticker1.first["data"]["temp_price"].to_f/@ticker2.first["data"]["temp_price"].to_f)/@google_rate - 1)*100).round(5)%>%</td>
-        <td><a href="<%=@ticker1.first["actions"]["public_view"]%>" class="btn btn-primary" role="button" target="_blank">Best <%=@currency_1%> offer</a>
+        <td class="text-center"><a href="<%=@ticker1.first["actions"]["public_view"]%>" class="btn btn-primary" role="button" target="_blank">Best <%=@currency_1%> offer</a>
             &emsp;
             <a href="<%=@ticker2.first["actions"]["public_view"]%>" class="btn btn-primary" role="button" target="_blank">Best <%=@currency_2%> offer</a>
         </td>
