@@ -2,7 +2,7 @@
 <hr>
 <form class="form-inline">
   <p style="text-indent: 1em;"><label for="currency_1">From currency: </label>
-    <select id="currency_1" class="form-control" onchange="countryChange(this);">
+    <select id="currency_1" class="form-control" onchange="countryChange(this);" name="currency_1">
       <option value="RUB">RUB</option>
       <option value="CNY">CNY</option>
       <option value="USD">USD</option>
@@ -14,7 +14,7 @@
 <br>
 <form class="form-inline">
   <p style="text-indent: 1em;"><label for="currency_2">&emsp; To currency:</label>
-    <select id="currency_2" class="form-control">
+    <select id="currency_2" class="form-control" name = "currency_2">
       <option value="CNY">CNY</option>
       <option value="USD">USD</option>
     </select>
@@ -22,7 +22,19 @@
     <input type="text" class="form-control" placeholder="Specify the bank name">
   </p>
 </form>
-<button type="submit" class="btn btn-default">Submit</button>
+<br>
+<form class="form-inline">
+  <div class="form-group" style="text-indent: 1em;">
+    <label class="sr-only" for="exampleInputAmount">Amount</label>
+    <div class="input-group">
+      <div class="input-group-addon">To get:</div>
+      <input type="text" class="form-control" name="amount" placeholder="Amount">
+      <div class="input-group-addon">.00</div>
+    </div>
+    &emsp;&emsp;
+    <button type="submit" class="btn btn-primary">Find rates</button>
+  </div>
+</form>
 
 
 <script type="text/javascript">
