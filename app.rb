@@ -16,13 +16,27 @@ def get_offers_sell currency
 end
 
 before do
-	Money::Bank::GoogleCurrency.ttl_in_seconds = 600
+	Money::Bank::GoogleCurrency.ttl_in_seconds = 300
 	Money.default_bank = Money::Bank::GoogleCurrency.new
 	@client = LocalBitcoins.new
 end
 
 get '/' do
 	erb :index
+end
+
+post '/' do
+	@currency_1 = params[:currency_1]
+	@currency_2 = params[:currency_2]
+
+	@google_rate = Money.new(1000000, @currency_2).exchange_to(@currency_1).to_f/10000
+	@ticker1 = get_offers_buy (@currency_1)
+	@ticker2 = get_offers_sell (@currency_2)
+
+	@currency_1.chop!
+	@currency_2.chop!
+
+	erb :result
 end
 
 get '/result' do

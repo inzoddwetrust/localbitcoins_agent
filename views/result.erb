@@ -1,26 +1,27 @@
 <h2>Best payment offers</h2>
 
+<h4>You are transferring:</h4> <pre><%=@currency_1%> to <%=@currency_2%></pre>
+
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Best offer to SELL in RUB</th>
-      <th>Best offer to SELL in CNY</th>
-      <th>Exchange rate</th>
-      <th>Current Google rate</th>
-      <th>Losses</th>
-      <th>Links</th>
+      <th>Best offer to BUY<div class="text-muted" style="font-size: 75%">BTC in <%=@currency_1%></div></th>
+      <th>Best offer to SELL<div class="text-muted" style="font-size: 75%">BTC in <%=@currency_2%></div></th>
+      <th>Exchange rate<div class="text-muted" style="font-size: 75%"><%=@currency_1%> per <%=@currency_2%></div></th>
+      <th>Current Google rate<div class="text-muted" style="font-size: 75%"><%=@currency_1%> per <%=@currency_2%></div></th>
+      <th>Losses<div class="text-muted" style="font-size: 75%">Minus means you'll get more</div></th>
+      <th>Links<div class="text-muted" style="font-size: 75%">CTRL+Click for new window</div></th>
     </tr>
   </thead>
   <tbody style="font-size: 150%; color: #AA0000">
         <td><%=@ticker1.first["data"]["temp_price"]%></td>
         <td><%=@ticker2.first["data"]["temp_price"]%></td>
-        <td ><%=(@ticker1.first["data"]["temp_price"].to_f/@ticker2.first["data"]["temp_price"].to_f).round(4)%> per CNY</td>
-        <td><%=@google_rate%> per CNY</td>
-        <td><%=(((@ticker1.first["data"]["temp_price"].to_f/@ticker2.first["data"]["temp_price"].to_f)/@google_rate.to_f - 1)*100).round(4)%>%</td>
-        <td><p><a href="<%=@ticker1.first["actions"]["public_view"]%>" class="btn btn-primary" role="button" target="_blank">Ctrl+click to RUB offer</a>
-            </p>
-            <p><a href="<%=@ticker2.first["actions"]["public_view"]%>" class="btn btn-primary" role="button" target="_blank">Ctrl+click to CNY offer</a>
-            </p>
+        <td ><%=(@ticker1.first["data"]["temp_price"].to_f/@ticker2.first["data"]["temp_price"].to_f).round(5)%></td>
+        <td><%=@google_rate.round(5)%></td>
+        <td><%=(((@ticker1.first["data"]["temp_price"].to_f/@ticker2.first["data"]["temp_price"].to_f)/@google_rate - 1)*100).round(5)%>%</td>
+        <td><a href="<%=@ticker1.first["actions"]["public_view"]%>" class="btn btn-primary" role="button" target="_blank">Best <%=@currency_1%> offer</a>
+            &emsp;
+            <a href="<%=@ticker2.first["actions"]["public_view"]%>" class="btn btn-primary" role="button" target="_blank">Best <%=@currency_2%> offer</a>
         </td>
   </td>
       </tr>
@@ -29,7 +30,7 @@
 
 
 
-<table class="table table-striped"> <caption><h3>All <u>BUY</u> offers in RUB</h3></caption>
+<table class="table table-striped"> <caption><h3>All <u>BUY</u> offers in <%=@currency_1%></h3></caption>
   <thead>
     <tr>
       <th>Profile</th>
@@ -40,22 +41,22 @@
     </tr>
   </thead>
   <tbody>
-    <%@ticker1.first(10).each do |offer|%>
+    <%@ticker1.each do |offer|%>
         <td class="col-md-2"><a href="https://localbitcoins.net/accounts/profile/<%=offer["data"]["profile"]["username"]%>/" target="_blank"><%=offer["data"]["profile"]["username"]%>
               (<%=offer["data"]["profile"]["trade_count"]%>, <%=offer["data"]["profile"]["feedback_score"]%>%)</a>
             <br>Last online
               <%=a = Time.at(Time.now.utc - Time.parse(offer["data"]["profile"]["last_online"])).utc.strftime("%H:%M:%S")%> ago.
         </td>
         <td class="col-md-5"><%=offer["data"]["online_provider"]%>, <%=offer["data"]["bank_name"]%></td>
-        <td class="col-md-2" style="font-size: 120%; color: #AA0000"><%=offer["data"]["temp_price"]%></td>
-        <td class="col-md-2"><%=offer["data"]["min_amount"]%> - <%=offer["data"]["max_amount_available"]%></td>
+        <td class="col-md-2" style="font-size: 120%; color: #AA0000"><%=offer["data"]["temp_price"]%> <%=@currency_1%></td>
+        <td class="col-md-2"><%=offer["data"]["min_amount"]%> - <%=offer["data"]["max_amount_available"]%> <%=@currency_1%></td>
         <td class="col-md-1"><a href="<%=offer["actions"]["public_view"]%>" class="btn btn-primary" role="button" target="_blank">Go to offer</a></td>
       </tr>
     <%end%>
   </tbody>
 </table>
 
-<table class="table table-striped"> <caption><h3>All <u>SELL</u> offers in CNY</h3></caption>
+<table class="table table-striped"> <caption><h3>All <u>SELL</u> offers in <%=@currency_2%></h3></caption>
   <thead>
     <tr>
       <th>Profile</th>
@@ -66,15 +67,15 @@
     </tr>
   </thead>
   <tbody>
-    <%@ticker2.first(10).each do |offer|%>
+    <%@ticker2.each do |offer|%>
         <td class="col-md-2"><a href="https://localbitcoins.net/accounts/profile/<%=offer["data"]["profile"]["username"]%>/" target="_blank"><%=offer["data"]["profile"]["username"]%>
               (<%=offer["data"]["profile"]["trade_count"]%>, <%=offer["data"]["profile"]["feedback_score"]%>%)</a>
             <br>Last online
               <%=a = Time.at(Time.now.utc - Time.parse(offer["data"]["profile"]["last_online"])).utc.strftime("%H:%M:%S")%> ago.
         </td>
         <td class="col-md-5"><%=offer["data"]["online_provider"]%>, <%=offer["data"]["bank_name"]%></td>
-        <td class="col-md-2" style="font-size: 120%; color: #AA0000"><%=offer["data"]["temp_price"]%></td>
-        <td class="col-md-2"><%=offer["data"]["min_amount"]%> - <%=offer["data"]["max_amount_available"]%></td>
+        <td class="col-md-2" style="font-size: 120%; color: #AA0000"><%=offer["data"]["temp_price"]%> <%=@currency_2%></td>
+        <td class="col-md-2"><%=offer["data"]["min_amount"]%> - <%=offer["data"]["max_amount_available"]%> <%=@currency_2%></td>
         <td class="col-md-1"><a href="<%=offer["actions"]["public_view"]%>" class="btn btn-primary" role="button" target="_blank">Go to offer</a></td>
       </tr>
     <%end%>
